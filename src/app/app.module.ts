@@ -1,18 +1,35 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 
+import {SoundcloudApiService} from './services/soundcloud-api.service';
+import {PlayerService} from './services/player.service';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
+import {TrackListComponent} from './track-list/track-list.component';
+import {PlayerComponent} from './player/player.component';
+import {IconButtonComponent} from './shared/components/icon-button/icon-button.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TrackListComponent,
+    PlayerComponent,
+    IconButtonComponent
+  ],
+  exports: [
+    IconButtonComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    SoundcloudApiService,
+    PlayerService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

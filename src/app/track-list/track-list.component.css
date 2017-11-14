@@ -1,0 +1,42 @@
+.track-list-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.track-list-container .card-container {
+  width: 80%;
+  min-width: 480px;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.track-list-container .card-container-item {
+  width: 200px;
+  height: 300px;
+  border: 1px solid #ccc;
+  flex-basis: auto;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.track-list-container .card-container-title{
+  padding-top: 10px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+}
+
+.card-container-controls{
+
+}

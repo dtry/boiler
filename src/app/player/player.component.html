@@ -1,0 +1,10 @@
+<div class="player">
+  <div class="player-controls" *ngIf="track">
+    <div class="player-track-controls">
+      <app-icon-button [className]="isPlaying ? 'pause' : 'play'" (onClick)="onPlay()"></app-icon-button>
+    </div>
+    <div class="player-track-time">{{track.title}}</div>
+    <div class="player-track-title"></div>
+    <div class="player-track-volume"></div>
+  </div>
+</div>

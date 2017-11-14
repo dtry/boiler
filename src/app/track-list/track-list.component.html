@@ -1,0 +1,11 @@
+<div class="track-list-container">
+  <div class="card-container">
+    <div *ngFor="let track of playList" class="card-container-item">
+      <img src="{{track.artwork_url}}" width="200" height="200">
+      <div class="card-container-title">{{track.title}}</div>
+      <div class="card-container-controls">
+        <app-icon-button [className]="isPlaying ? 'pause' : 'play'" (onClick)="onClick(track)"></app-icon-button>
+      </div>
+    </div>
+  </div>
+</div>
