@@ -10,10 +10,12 @@ import {TrackListComponent} from './track-list/track-list.component';
 import {PlayerComponent} from './player/player.component';
 import {IconButtonComponent} from './shared/components/icon-button/icon-button.component';
 import { TimeLineComponent } from './shared/components/time-line/time-line.component';
+import {FormatTimePipe} from './shared/pipes/format-time/format-time';
 
 
 @NgModule({
   declarations: [
+    FormatTimePipe,
     AppComponent,
     TrackListComponent,
     PlayerComponent,

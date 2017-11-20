@@ -5,6 +5,8 @@
   height: 50px;
   background: #ccc;
   width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .player-controls {
@@ -23,7 +25,6 @@
 }
 
 .player-track-title {
-  flex: 1;
   padding: 0 10px;
   overflow: hidden;
   text-overflow: ellipsis;
