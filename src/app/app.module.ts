@@ -9,6 +9,7 @@ import {AppComponent} from './app.component';
 import {TrackListComponent} from './track-list/track-list.component';
 import {PlayerComponent} from './player/player.component';
 import {IconButtonComponent} from './shared/components/icon-button/icon-button.component';
+import { TimeLineComponent } from './shared/components/time-line/time-line.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {IconButtonComponent} from './shared/components/icon-button/icon-button.c
     AppComponent,
     TrackListComponent,
     PlayerComponent,
-    IconButtonComponent
+    IconButtonComponent,
+    TimeLineComponent
   ],
   exports: [
     IconButtonComponent

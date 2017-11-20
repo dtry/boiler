@@ -1,35 +1,32 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {PlayerService} from '../services/player.service';
 import {Track} from '../models/track';
-
-import {IconButtonComponent} from '../shared/components/icon-button/icon-button.component';
+import {Times} from "../models/times";
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  providers: [IconButtonComponent]
+  encapsulation: ViewEncapsulation.None
 })
 export class PlayerComponent implements OnInit {
-  private track: Track;
-  private isPlaying: boolean;
+  track: Track;
+  isPlaying: boolean;
+  times: Times;
 
   constructor(private playerService: PlayerService) {
     this.isPlaying = false;
 
     this.playerService.getTrack().subscribe(track => this.track = track);
     this.playerService.getPlay().subscribe(isPlaying => this.isPlaying = isPlaying);
+    this.playerService.timeToObservable().subscribe(times => this.times = times);
   }
 
   ngOnInit() {
   }
 
   onPlay() {
-    this.isPlaying = !this.isPlaying;
-
-
-
+    this.playerService.setPlay(!this.isPlaying);
   }
 
 }

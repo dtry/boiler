@@ -14,8 +14,12 @@ import {IconButtonComponent} from '../shared/components/icon-button/icon-button.
 export class TrackListComponent implements OnInit {
 
   playList: Track[] = [];
+  isPlaying: boolean;
+  selectedTrackId: number;
 
   constructor(private apiService: SoundcloudApiService, private playerService: PlayerService) {
+
+    this.playerService.getPlay().subscribe(isPlaying => this.isPlaying = isPlaying);
   }
 
   ngOnInit() {
@@ -28,6 +32,8 @@ export class TrackListComponent implements OnInit {
   }
 
   onClick(track: Track): void {
+    this.selectedTrackId = track.id;
     this.playerService.setTrack(track);
+    this.playerService.setPlay(!this.isPlaying);
   }
 }
