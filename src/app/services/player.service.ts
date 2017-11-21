@@ -31,7 +31,7 @@ export class PlayerService {
   }
 
   setTrack(track: Track) {
-    this.audio.src = track.stream_url + '?client_id=0U89KnefZ29oWNFitwxnMmKoGkGazKaF';
+    this.audio.src = track.streamUrl;
     this.track$.next(track);
   }
 

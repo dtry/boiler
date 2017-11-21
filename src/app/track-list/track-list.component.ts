@@ -3,6 +3,7 @@ import {SoundcloudApiService} from '../services/soundcloud-api.service';
 import {Track} from '../models/track';
 import {PlayerService} from '../services/player.service';
 import {IconButtonComponent} from '../shared/components/icon-button/icon-button.component';
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-track-list',
@@ -13,22 +14,16 @@ import {IconButtonComponent} from '../shared/components/icon-button/icon-button.
 })
 export class TrackListComponent implements OnInit {
 
-  playList: Track[] = [];
+  playList: Observable<Track[]>;
   isPlaying: boolean;
   selectedTrackId: number;
 
   constructor(private apiService: SoundcloudApiService, private playerService: PlayerService) {
-
+    this.playList = this.apiService.getDefaultTracklist();
     this.playerService.getPlay().subscribe(isPlaying => this.isPlaying = isPlaying);
   }
 
   ngOnInit() {
-    this.getDefaultTracklist();
-  }
-
-  getDefaultTracklist(): void {
-    this.apiService.getDefaultTracklist()
-      .subscribe(playList => this.playList = playList);
   }
 
   onClick(track: Track): void {

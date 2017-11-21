@@ -4,6 +4,11 @@ body {
   padding: 0;
 }
 
+div{
+  color: #2f2f2f;
+  font-size: 11pt;
+}
+
 .btn-play {
   background: url('app/shared/images/buttons/play.svg') no-repeat 55% center;
 }

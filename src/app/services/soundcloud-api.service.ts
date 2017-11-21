@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import { catchError, map, tap } from 'rxjs/operators';
 
-import {Track} from '../models/track';
+import {Track, TrackData, createTrack} from '../models/track';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -21,7 +22,9 @@ export class SoundcloudApiService {
   }
 
   getDefaultTracklist(): Observable<Track[]> {
-    return this.http.get<Track[]>(this.PLAY_LIST_DEFAULT);
-
+    return this.http.get<TrackData[]>(this.PLAY_LIST_DEFAULT)
+      .pipe(
+          map(responce => responce.map(item => createTrack(item)))
+      );
   }
 }
