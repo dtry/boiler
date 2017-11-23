@@ -2,7 +2,7 @@
   height: 8px;
   width: 100%;
   position: relative;
-  background: #f1f1f1;
+  background: #292929;
   cursor: pointer;
 }
 
@@ -12,7 +12,7 @@
 
 .time-line-buffered {
   position: absolute;
-  background: #ffd6a2;
+  background: #505050;
 }
 
 .time-line-elapse {

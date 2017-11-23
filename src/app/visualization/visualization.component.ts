@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
 import * as THREE from 'three';
+
 import {PlayerService} from "../services/player.service";
 
 @Component({
@@ -25,8 +26,8 @@ export class VisualizationComponent implements OnInit {
 
     this.container = this.element.nativeElement.querySelector('div');
 
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / (window.innerHeight - 20), 1, 5000);
-    this.camera.position.set(1000, 400, 1000);
+    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
+    this.camera.position.set(1000, 400, -700);
     this.camera.lookAt(new THREE.Vector3());
 
     //this.controls = new THREE.EditorControls(this.camera, this.container);
@@ -36,11 +37,11 @@ export class VisualizationComponent implements OnInit {
     // });
 
     this.scene = new THREE.Scene();
-    this.scene.add(new THREE.AmbientLight(0x999999));
+    this.scene.add(new THREE.AmbientLight(0x444444));
 
-    this.light = new THREE.SpotLight(0x666666, 1);
+    this.light = new THREE.SpotLight(0xffffff, 1);
     this.light.castShadow = true;
-
+    this.light.position.set(new THREE.Vector3(500, -500, 500));
     this.scene.add(this.light);
 
     this.area = this.renderStairs(10);
@@ -48,9 +49,9 @@ export class VisualizationComponent implements OnInit {
     this.scene.add(this.area);
 
     this.renderer = new THREE.WebGLRenderer({antialias: true});
-    this.renderer.setClearColor(0xbbbbbb);
+    this.renderer.setClearColor(0x333333);
     this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(window.innerWidth, window.innerHeight - 20);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.container.appendChild(this.renderer.domElement);
 
     this.render();
@@ -60,10 +61,10 @@ export class VisualizationComponent implements OnInit {
   }
 
   onWindowResize() {
-    this.camera.aspect = window.innerWidth / (window.innerHeight - 20);
+    this.camera.aspect = window.innerWidth / (window.innerHeight);
     this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(window.innerWidth, window.innerHeight - 20);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
 
     this.render();
   }

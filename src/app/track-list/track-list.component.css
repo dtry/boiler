@@ -18,14 +18,14 @@
 .track-list-container .card-container-item {
   width: 200px;
   height: 285px;
-  border: 1px solid #ccc;
+  border: 1px solid #000;
   flex-basis: auto;
   margin: 10px;
   padding: 10px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  background: #e8e8e8;
+  background: #292929;
 }
 
 .track-list-container .card-container-title{
