@@ -11,6 +11,7 @@ import {PlayerComponent} from './player/player.component';
 import {IconButtonComponent} from './shared/components/icon-button/icon-button.component';
 import { TimeLineComponent } from './shared/components/time-line/time-line.component';
 import {FormatTimePipe} from './shared/pipes/format-time/format-time';
+import { VisualizationComponent } from './visualization/visualization.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {FormatTimePipe} from './shared/pipes/format-time/format-time';
     TrackListComponent,
     PlayerComponent,
     IconButtonComponent,
-    TimeLineComponent
+    TimeLineComponent,
+    VisualizationComponent
   ],
   exports: [
     IconButtonComponent

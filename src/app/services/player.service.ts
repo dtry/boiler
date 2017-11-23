@@ -14,12 +14,46 @@ export class PlayerService {
 
   track$: Subject<any> = new Subject<Track>();
   isPlay$: Subject<boolean> = new Subject<boolean>();
+  bounds$: Subject<Uint8Array> = new Subject<Uint8Array>();
+
   audio = new Audio();
+  context;
+  node;
+  analyser;
+  bands;
+  source;
 
   constructor() {
     this.isPlay$.asObservable().subscribe(isPlay => isPlay ? this.play() : this.pause());
-
     this.time$ = Observable.fromEvent(this.audio, 'timeupdate', this.getTimes);
+
+    this.initAudioContext();
+  }
+
+  initAudioContext() {
+    this.audio.crossOrigin = 'anonymous';
+    this.context = new AudioContext();
+    this.node = this.context.createScriptProcessor(2048, 1, 1);
+
+    this.analyser = this.context.createAnalyser();
+    this.analyser.smoothingTimeConstant = 0.3;
+    this.analyser.fftSize = 2048;
+
+    this.source = this.context.createMediaElementSource(this.audio);
+    this.source.connect(this.analyser);
+    this.analyser.connect(this.node);
+    this.node.connect(this.context.destination);
+    this.source.connect(this.context.destination);
+
+    this.bands = new Uint8Array(this.analyser.frequencyBinCount);
+
+    this.node.onaudioprocess = () => {
+      this.analyser.getByteFrequencyData(this.bands);
+      if (!this.audio.paused) {
+        this.bounds$.next(this.bands);
+      }
+    };
+
   }
 
   setPlay(isPlay: boolean) {
@@ -65,5 +99,9 @@ export class PlayerService {
 
   seek(time: number): void {
     this.audio.currentTime = time;
+  }
+
+  getBounds() {
+    return this.bounds$.asObservable();
   }
 }

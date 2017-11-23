@@ -3,12 +3,12 @@
   width: 100%;
   flex-direction: row;
   justify-content: center;
+  position: absolute;
 }
 
 .track-list-container .card-container {
   width: 80%;
   min-width: 480px;
-  background: #fff;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -25,6 +25,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  background: #e8e8e8;
 }
 
 .track-list-container .card-container-title{
