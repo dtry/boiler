@@ -6,7 +6,12 @@ body {
 
 div{
   color: #bbbbbb;
-  font-size: 11pt;
+  font: 13px Arial;
+}
+
+.btn-search {
+  background: url('app/shared/images/buttons/search.svg') no-repeat 55% center;
+  background-size: 24px;
 }
 
 .btn-play {

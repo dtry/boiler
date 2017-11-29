@@ -1,9 +1,11 @@
 .track-list-container {
+  top: 60px;
   display: flex;
   width: 100%;
   flex-direction: row;
   justify-content: center;
   position: absolute;
+  margin-bottom: 60px;
 }
 
 .track-list-container .card-container {
@@ -28,7 +30,7 @@
   background: #292929;
 }
 
-.track-list-container .card-container-title{
+.track-list-container .card-container-title {
   padding-top: 10px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -40,6 +42,6 @@
   flex: 1;
 }
 
-.card-container-controls{
+.card-container-controls {
 
 }

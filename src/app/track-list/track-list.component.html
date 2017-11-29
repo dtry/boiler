@@ -1,6 +1,6 @@
 <div class="track-list-container">
   <div class="card-container">
-    <div *ngFor="let track of playList | async" class="card-container-item">
+    <div *ngFor="let track of trackList" class="card-container-item">
       <img src="{{track.artworkUrl}}" width="200" height="200">
       <div class="card-container-title">{{track.title}}</div>
       <div class="card-container-controls">

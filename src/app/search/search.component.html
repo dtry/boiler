@@ -1,0 +1,13 @@
+<div class="search-bar">
+  <form [formGroup]="searchForm">
+    <input formControlName="search" placeholder="Search Tracks" (change)="onEnter()"/>
+  </form>
+  <div *ngIf="searchHelper" class="search-result">
+    <ul>
+      <li *ngFor="let item of searchHelper.collection" (click)="setValue(item)">
+        {{item.output}}
+      </li>
+    </ul>
+  </div>
+  <app-icon-button [className]="'search'"></app-icon-button>
+</div>

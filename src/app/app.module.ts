@@ -1,5 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
+
 import {HttpClientModule} from '@angular/common/http';
 
 import {SoundcloudApiService} from './services/soundcloud-api.service';
@@ -9,9 +11,11 @@ import {AppComponent} from './app.component';
 import {TrackListComponent} from './track-list/track-list.component';
 import {PlayerComponent} from './player/player.component';
 import {IconButtonComponent} from './shared/components/icon-button/icon-button.component';
-import { TimeLineComponent } from './shared/components/time-line/time-line.component';
+import {TimeLineComponent} from './shared/components/time-line/time-line.component';
 import {FormatTimePipe} from './shared/pipes/format-time/format-time';
-import { VisualizationComponent } from './visualization/visualization.component';
+import {VisualizationComponent} from './visualization/visualization.component';
+import {SearchComponent} from './search/search.component';
+import {HeaderComponent} from './header/header.component';
 
 
 @NgModule({
@@ -22,14 +26,17 @@ import { VisualizationComponent } from './visualization/visualization.component'
     PlayerComponent,
     IconButtonComponent,
     TimeLineComponent,
-    VisualizationComponent
+    VisualizationComponent,
+    SearchComponent,
+    HeaderComponent
   ],
   exports: [
     IconButtonComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     SoundcloudApiService,
