@@ -6,13 +6,15 @@ import {Track} from '../models/track';
 import {Times} from '../models/times';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {SoundcloudApiService} from '../services/soundcloud-api.service';
 
 @Injectable()
 export class PlayerService {
 
   time$: Observable<Times>;
 
-  track$: Subject<any> = new Subject<Track>();
+  track$: BehaviorSubject<any> = new BehaviorSubject({});
   isPlay$: Subject<boolean> = new Subject<boolean>();
   bounds$: Subject<Uint8Array> = new Subject<Uint8Array>();
 
@@ -23,9 +25,11 @@ export class PlayerService {
   bands;
   source;
 
-  constructor() {
+  constructor(private apiService: SoundcloudApiService) {
     this.isPlay$.asObservable().subscribe(isPlay => isPlay ? this.play() : this.pause());
     this.time$ = Observable.fromEvent(this.audio, 'timeupdate', this.getTimes);
+
+    Observable.fromEvent(this.audio, 'ended').subscribe(() => this.onNext());
 
     this.initAudioContext();
   }
@@ -103,5 +107,10 @@ export class PlayerService {
 
   getBounds() {
     return this.bounds$.asObservable();
+  }
+
+  onNext() {
+    this.setTrack(this.apiService.getNextTrack(this.track$.getValue().id));
+    this.play();
   }
 }

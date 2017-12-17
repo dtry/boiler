@@ -2,6 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {PlayerService} from '../services/player.service';
 import {Track} from '../models/track';
 import {Times} from "../models/times";
+import {SoundcloudApiService} from '../services/soundcloud-api.service';
 
 @Component({
   selector: 'app-player',
@@ -14,7 +15,7 @@ export class PlayerComponent implements OnInit {
   isPlaying: boolean;
   times: Times;
 
-  constructor(private playerService: PlayerService) {
+  constructor(private playerService: PlayerService, private apiService: SoundcloudApiService) {
     this.isPlaying = false;
 
     this.playerService.getTrack().subscribe(track => this.track = track);
@@ -27,6 +28,18 @@ export class PlayerComponent implements OnInit {
 
   onPlay() {
     this.playerService.setPlay(!this.isPlaying);
+  }
+
+  onNext() {
+    this.playerService.setTrack(this.apiService.getNextTrack(this.track.id));
+    this.isPlaying = true;
+    this.playerService.setPlay(this.isPlaying);
+  }
+
+  onPreview() {
+    this.playerService.setTrack(this.apiService.getPreviewTrack(this.track.id));
+    this.isPlaying = true;
+    this.playerService.setPlay(this.isPlaying);
   }
 
 }

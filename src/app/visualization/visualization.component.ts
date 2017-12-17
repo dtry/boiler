@@ -18,16 +18,24 @@ export class VisualizationComponent implements OnInit {
   private scene;
   private light;
   private area;
+  private size
 
   constructor(public element: ElementRef, public player: PlayerService) {
   }
 
   ngOnInit() {
+    let boundingClientRect;
 
     this.container = this.element.nativeElement.querySelector('div');
+    boundingClientRect = this.container.getBoundingClientRect();
 
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
-    this.camera.position.set(1000, 400, -700);
+    this.size = {
+      width: boundingClientRect.width,
+      height: boundingClientRect.height
+    };
+
+    this.camera = new THREE.PerspectiveCamera(45, this.size.width / this.size.height, 1, 1500);
+    this.camera.position.set(900, 400, -400);
     this.camera.lookAt(new THREE.Vector3());
 
     //this.controls = new THREE.EditorControls(this.camera, this.container);
@@ -51,7 +59,7 @@ export class VisualizationComponent implements OnInit {
     this.renderer = new THREE.WebGLRenderer({antialias: true});
     this.renderer.setClearColor(0x333333);
     this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(this.size.width, this.size.height);
     this.container.appendChild(this.renderer.domElement);
 
     this.render();
@@ -61,10 +69,10 @@ export class VisualizationComponent implements OnInit {
   }
 
   onWindowResize() {
-    this.camera.aspect = window.innerWidth / (window.innerHeight);
+    this.camera.aspect = this.size.width / this.size.height;
     this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(this.size.width, this.size.height);
 
     this.render();
   }

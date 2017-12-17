@@ -1,10 +1,12 @@
 <div class="player-container">
-  <div class="player-controls" *ngIf="track">
+  <div class="player-controls" *ngIf="track && track.id">
 
     <app-time-line (seek)="playerService.seek($event)" [times]="times"></app-time-line>
     <div class="player">
       <div class="player-track-controls">
+        <app-icon-button [className]="'preview-track '" (onClick)="onPreview()"></app-icon-button>
         <app-icon-button [className]="isPlaying ? 'pause' : 'play'" (onClick)="onPlay()"></app-icon-button>
+        <app-icon-button [className]="'next-track'" (onClick)="onNext()"></app-icon-button>
       </div>
       <div class="player-track-title">{{times?.currentTime | formatTime}}/{{track.duration | formatTime: 'ms'}}</div>
       <div class="player-track-time">{{track.title}}</div>

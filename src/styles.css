@@ -2,6 +2,7 @@
 body {
   margin: 0;
   padding: 0;
+  background: #333333;
 }
 
 div{
@@ -20,4 +21,12 @@ div{
 
 .btn-pause {
   background: url('app/shared/images/buttons/pause.svg') no-repeat 55% center;
+}
+
+.btn-preview-track {
+  background: url('app/shared/images/buttons/left-arrow.svg') no-repeat 55% center;
+}
+
+.btn-next-track {
+  background: url('app/shared/images/buttons/right-arrow.svg') no-repeat 55% center;
 }

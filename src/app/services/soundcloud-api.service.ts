@@ -14,10 +14,17 @@ const httpOptions = {
   })
 };
 
+interface IDataSource {
+  tracks: Array<Track>;
+}
+
 @Injectable()
 export class SoundcloudApiService {
 
   trackList$: Subject<Track[]> = new Subject<Track[]>();
+  dataStore: IDataSource = {
+    tracks: null
+  } as IDataSource;
 
   // private PLAY_LIST_DEFAULT = 'https://api-v2.soundcloud.com/charts?kind=top&genre=soundcloud%3Agenres%3Adeephouse' +
   //   '&high_tier_only=false&client_id=0U89KnefZ29oWNFitwxnMmKoGkGazKaF&limit=50&offset=0&linked_partitioning=1';
@@ -31,6 +38,7 @@ export class SoundcloudApiService {
   private TRACKS_BY_QUERY = '/tracks?limit=50&offset=0&linked_partitioning=1&';
 
   constructor(private http: HttpClient) {
+    this.trackList$.subscribe(list => this.dataStore.tracks = list);
   }
 
   getDefaultTracklist(): void {
@@ -49,7 +57,7 @@ export class SoundcloudApiService {
   loadTracks(query: string) {
     const path = this.SERVER_PROXY_PATH_V_1 + this.TRACKS_BY_QUERY + this.CLIENT_ID_PARAM + `&q=${query}%20`;
 
-    this.http.get<TrackData[]>(path)
+    this.http.get<any>(path)
       .subscribe(response => this.trackList$.next(response.collection.map(item => createTrack(item))));
   }
 
@@ -57,4 +65,29 @@ export class SoundcloudApiService {
     return this.trackList$.asObservable();
   }
 
+  getNextTrack(id: number): Track {
+    let nextTrack: Track;
+
+    this.dataStore.tracks.some((track, index, list) => {
+      if (track.id === id) {
+        nextTrack = list[index + 1] || track;
+        return true;
+      }
+    });
+
+    return nextTrack;
+  }
+
+  getPreviewTrack(id: number): Track {
+    let previewTrack: Track;
+
+    this.dataStore.tracks.some((track, index, list) => {
+      if (track.id === id) {
+        previewTrack = list[index - 1] || track;
+        return true;
+      }
+    });
+
+    return previewTrack;
+  }
 }
