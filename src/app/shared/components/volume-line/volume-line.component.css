@@ -1,0 +1,29 @@
+.volume-container {
+  height: 50px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.line-background {
+  height: 2px;
+  background: #505050;
+  cursor: pointer;
+  flex: 1
+}
+
+.line-value {
+  height: 2px;
+  background: #ff4500;
+  width: 70%;
+}
+
+.cursor {
+  background: #ff4500;
+  height: 10px;
+  width: 10px;
+  border-radius: 10px;
+  margin-top: -4px;
+  float: right;
+}

@@ -30,6 +30,7 @@ export class PlayerService {
     this.time$ = Observable.fromEvent(this.audio, 'timeupdate', this.getTimes);
 
     Observable.fromEvent(this.audio, 'ended').subscribe(() => this.onNext());
+    this.audio.volume = 0.5;
 
     this.initAudioContext();
   }
@@ -112,5 +113,13 @@ export class PlayerService {
   onNext() {
     this.setTrack(this.apiService.getNextTrack(this.track$.getValue().id));
     this.play();
+  }
+
+  setVolume(value: number) {
+    this.audio.volume = value;
+  }
+
+  getVolume(): number {
+    return this.audio.volume;
   }
 }

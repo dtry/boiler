@@ -16,6 +16,7 @@ import {FormatTimePipe} from './shared/pipes/format-time/format-time';
 import {VisualizationComponent} from './visualization/visualization.component';
 import {SearchComponent} from './search/search.component';
 import {HeaderComponent} from './header/header.component';
+import {VolumeLineComponent} from './shared/components/volume-line/volume-line.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {HeaderComponent} from './header/header.component';
     TimeLineComponent,
     VisualizationComponent,
     SearchComponent,
-    HeaderComponent
+    HeaderComponent,
+    VolumeLineComponent
   ],
   exports: [
     IconButtonComponent

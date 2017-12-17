@@ -5,7 +5,7 @@ body {
   background: #333333;
 }
 
-div{
+div {
   color: #bbbbbb;
   font: 13px Arial;
 }
@@ -29,4 +29,8 @@ div{
 
 .btn-next-track {
   background: url('app/shared/images/buttons/right-arrow.svg') no-repeat 55% center;
+}
+
+.btn-monitor {
+  background: url('app/shared/images/buttons/monitor.svg') no-repeat 55% center;
 }

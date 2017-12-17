@@ -21,10 +21,6 @@
 }
 
 .player-track-time {
-
-}
-
-.player-track-title {
   padding: 0 10px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -32,6 +28,18 @@
   word-wrap: normal;
 }
 
-.player-track-volume {
+.player-track-title {
+  max-width: 400px;
+  line-height: 40px;
+  text-overflow: ellipsis;
+  height: 40px;
+  min-width: 400px;
+}
 
+.player-track-volume {
+  margin-left: 30px;
+}
+
+.player-monitor {
+  margin-left: 30px;
 }

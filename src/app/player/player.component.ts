@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {PlayerService} from '../services/player.service';
 import {Track} from '../models/track';
-import {Times} from "../models/times";
+import {Times} from '../models/times';
 import {SoundcloudApiService} from '../services/soundcloud-api.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class PlayerComponent implements OnInit {
   track: Track;
   isPlaying: boolean;
   times: Times;
+  volume: number;
 
   constructor(private playerService: PlayerService, private apiService: SoundcloudApiService) {
     this.isPlaying = false;
@@ -21,6 +22,7 @@ export class PlayerComponent implements OnInit {
     this.playerService.getTrack().subscribe(track => this.track = track);
     this.playerService.getPlay().subscribe(isPlaying => this.isPlaying = isPlaying);
     this.playerService.timeToObservable().subscribe(times => this.times = times);
+    this.volume = this.playerService.getVolume();
   }
 
   ngOnInit() {
@@ -42,4 +44,7 @@ export class PlayerComponent implements OnInit {
     this.playerService.setPlay(this.isPlaying);
   }
 
+  onMonitor() {
+
+  }
 }
