@@ -1,7 +1,8 @@
-import {Component, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
 import * as THREE from 'three';
 
-import {PlayerService} from "../services/player.service";
+import {PlayerService} from '../services/player.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-visualization',
@@ -9,7 +10,7 @@ import {PlayerService} from "../services/player.service";
   styleUrls: ['./visualization.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class VisualizationComponent implements OnInit {
+export class VisualizationComponent implements OnInit, OnDestroy {
 
   private container;
   private camera;
@@ -18,16 +19,30 @@ export class VisualizationComponent implements OnInit {
   private scene;
   private light;
   private area;
-  private size
+  private size;
+  private bounds$;
 
-  constructor(public element: ElementRef, public player: PlayerService) {
+  constructor(public element: ElementRef,
+              public player: PlayerService,
+              private router: Router,
+              private route: ActivatedRoute) {
+
+
+    // this.route.params.subscribe(params => {
+    //   console.log(params);
+    //
+    //   if (!params['id']) {
+    //     return;
+    //   }
+    //
+    //   this.track = this.apiService.getTrackById(params['id']);
+    // });
+
   }
 
   ngOnInit() {
-    let boundingClientRect;
-
     this.container = this.element.nativeElement.querySelector('div');
-    boundingClientRect = this.container.getBoundingClientRect();
+    const boundingClientRect = this.container.getBoundingClientRect();
 
     this.size = {
       width: boundingClientRect.width,
@@ -65,14 +80,28 @@ export class VisualizationComponent implements OnInit {
     this.render();
 
     window.addEventListener('resize', this.onWindowResize.bind(this), false);
-    this.player.getBounds().subscribe(bounds => this.update(bounds));
+    this.bounds$ = this.player.getBounds();
+    this.bounds$.subscribe(bounds => this.update(bounds));
+  }
+
+  ngOnDestroy() {
+    // this.bounds$.source.unsubscribe();
+    // window.removeEventListener('resize', this.onWindowResize.bind(this), false);
+
   }
 
   onWindowResize() {
+    const boundingClientRect = this.container.getBoundingClientRect();
+    this.size = {
+      width: boundingClientRect.width,
+      height: boundingClientRect.height
+    };
+
     this.camera.aspect = this.size.width / this.size.height;
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(this.size.width, this.size.height);
+    console.log('resize');
 
     this.render();
   }
@@ -125,7 +154,6 @@ export class VisualizationComponent implements OnInit {
 
       coube.material.color.setHSL(s, 0.6, 0.4);
       coube.scale.set(8, delta, 8);
-
       coube.position.setY(delta === 1 ? 0 : delta / 2);
     });
 

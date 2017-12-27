@@ -3,6 +3,7 @@ import {PlayerService} from '../services/player.service';
 import {Track} from '../models/track';
 import {Times} from '../models/times';
 import {SoundcloudApiService} from '../services/soundcloud-api.service';
+import {Router, ActivatedRoute, NavigationEnd, RoutesRecognized} from '@angular/router';
 
 @Component({
   selector: 'app-player',
@@ -15,14 +16,34 @@ export class PlayerComponent implements OnInit {
   isPlaying: boolean;
   times: Times;
   volume: number;
+  trackCardView: boolean;
 
-  constructor(private playerService: PlayerService, private apiService: SoundcloudApiService) {
+  constructor(private playerService: PlayerService,
+              private apiService: SoundcloudApiService,
+              private router: Router,
+              private route: ActivatedRoute) {
+
     this.isPlaying = false;
+    this.trackCardView = true;
+    this.volume = this.playerService.getVolume();
 
     this.playerService.getTrack().subscribe(track => this.track = track);
     this.playerService.getPlay().subscribe(isPlaying => this.isPlaying = isPlaying);
     this.playerService.timeToObservable().subscribe(times => this.times = times);
-    this.volume = this.playerService.getVolume();
+
+    // load track if this track is undefined and params in rout not empty.
+    this.router.events.subscribe(val => {
+      if (val instanceof RoutesRecognized) {
+        const id = +val.state.root.firstChild.params['id'];
+        if (!id || this.track.id) {
+          return;
+        }
+        this.apiService.loadTrackById(id).subscribe(track => {
+          this.track = track;
+          this.playerService.setTrack(this.track);
+        });
+      }
+    });
   }
 
   ngOnInit() {
@@ -45,6 +66,12 @@ export class PlayerComponent implements OnInit {
   }
 
   onMonitor() {
+    if (this.trackCardView) {
+      this.router.navigate(['/tracks/' + this.track.id]);
+    } else {
+      this.router.navigate(['/tracks']);
+    }
 
+    this.trackCardView = !this.trackCardView;
   }
 }

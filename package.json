@@ -24,6 +24,7 @@
     "core-js": "^2.4.1",
     "express": "^4.16.2",
     "express-http-proxy": "^1.1.0",
+    "immutable": "^3.8.2",
     "rxjs": "^5.5.2",
     "three": "latest",
     "zone.js": "^0.8.14"
@@ -35,7 +36,7 @@
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
-    "codelyzer": "~3.2.0",
+    "codelyzer": "^3.2.2",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",

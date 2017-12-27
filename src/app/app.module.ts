@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
+import {Routes, RouterModule} from '@angular/router';
 
 import {HttpClientModule} from '@angular/common/http';
 
@@ -18,6 +19,12 @@ import {SearchComponent} from './search/search.component';
 import {HeaderComponent} from './header/header.component';
 import {VolumeLineComponent} from './shared/components/volume-line/volume-line.component';
 
+const routes: Routes = [
+  {path: 'tracks/:id', component: VisualizationComponent},
+  {path: 'tracks', component: TrackListComponent},
+  {path: '', redirectTo: '/tracks', pathMatch: 'full'},
+  {path: '**', component: TrackListComponent}
+];
 
 @NgModule({
   declarations: [
@@ -36,6 +43,7 @@ import {VolumeLineComponent} from './shared/components/volume-line/volume-line.c
     IconButtonComponent
   ],
   imports: [
+    RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule
