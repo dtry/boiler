@@ -51,6 +51,7 @@ export class SearchComponent implements OnDestroy {
       })
       .subscribe(response => this.searchHelper = response);
 
+    // Global listeners
     // remove all search result items and hide it list when click was by component in out side.
     this.documentClickHelper = this.renderer.listen('document', 'click', (event) => {
       this.searchHelper = null;
@@ -66,8 +67,6 @@ export class SearchComponent implements OnDestroy {
   }
 
   onKeyPress(event) {
-    // TODO: Add esc listener for clear field.
-
     if (!this.isSearchCollectionNotEmpty()) {
       return;
     }
@@ -81,27 +80,46 @@ export class SearchComponent implements OnDestroy {
     }
   }
 
+  /**
+   * Check result list of search request
+   *
+   * @returns {boolean} true if list is not empty else false.
+   */
   isSearchCollectionNotEmpty() {
-    return this.searchHelper && this.searchHelper.collection.length;
+    return Boolean(this.searchHelper && this.searchHelper.collection.length);
   }
 
+  /**
+   * Load track list by search result item
+   */
   onEnter() {
     if (this.isSearchCollectionNotEmpty()) {
       this.setValue(this.searchHelper.collection[this.selectedLiValue]);
     }
   }
 
+  /**
+   * Clear field and list of result search
+   */
   onEsc() {
     this.searchField.setValue(null, {emitEvent: false});
     this.searchHelper = null;
   }
 
+  /**
+   * Apply value from search result list to input.
+   *
+   * @param {SearchDataCollection} item is item from search result list.
+   */
   setValue(item: SearchDataCollection): void {
     this.searchField.setValue(item.output, {emitEvent: false});
     this.searchHelper = null;
     this.loadTracks();
   }
 
+  /**
+   *  load tracks by query (value of input).
+   */
   loadTracks() {
     this.searchHelper = null;
     this.apiService.loadTracks(this.searchField.value);

@@ -6,7 +6,7 @@
     <ul>
       <li *ngFor="let item of searchHelper.collection; let i = index" (click)="setValue(item)"
           [class.active]="i === selectedLiValue">
-        {{item.output}} - {{i}}
+        {{item.output}}
       </li>
     </ul>
   </div>

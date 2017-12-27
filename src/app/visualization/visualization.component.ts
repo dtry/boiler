@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewEncapsulation, OnDestroy, Renderer2} from '@angular/core';
 import * as THREE from 'three';
 
 import {PlayerService} from '../services/player.service';
@@ -22,25 +22,20 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   private size;
   private bounds$;
 
-  constructor(public element: ElementRef,
-              public player: PlayerService,
+  private windowResizeHelper: Function;
+
+  private subscription;
+
+  constructor(private element: ElementRef,
+              private player: PlayerService,
               private router: Router,
-              private route: ActivatedRoute) {
-
-
-    // this.route.params.subscribe(params => {
-    //   console.log(params);
-    //
-    //   if (!params['id']) {
-    //     return;
-    //   }
-    //
-    //   this.track = this.apiService.getTrackById(params['id']);
-    // });
+              private route: ActivatedRoute,
+              private componentRenderer: Renderer2) {
 
   }
 
   ngOnInit() {
+
     this.container = this.element.nativeElement.querySelector('div');
     const boundingClientRect = this.container.getBoundingClientRect();
 
@@ -79,15 +74,14 @@ export class VisualizationComponent implements OnInit, OnDestroy {
 
     this.render();
 
-    window.addEventListener('resize', this.onWindowResize.bind(this), false);
-    this.bounds$ = this.player.getBounds();
-    this.bounds$.subscribe(bounds => this.update(bounds));
+    this.windowResizeHelper = this.componentRenderer.listen('window', 'resize', this.onWindowResize.bind(this));
+
+    this.subscription = this.player.getBounds().subscribe(bounds => this.update(bounds));
   }
 
   ngOnDestroy() {
-    // this.bounds$.source.unsubscribe();
-    // window.removeEventListener('resize', this.onWindowResize.bind(this), false);
-
+    this.windowResizeHelper();
+    this.subscription.unsubscribe();
   }
 
   onWindowResize() {
@@ -99,10 +93,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
 
     this.camera.aspect = this.size.width / this.size.height;
     this.camera.updateProjectionMatrix();
-
     this.renderer.setSize(this.size.width, this.size.height);
-    console.log('resize');
-
     this.render();
   }
 
