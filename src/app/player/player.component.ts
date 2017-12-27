@@ -3,7 +3,7 @@ import {PlayerService} from '../services/player.service';
 import {Track} from '../models/track';
 import {Times} from '../models/times';
 import {SoundcloudApiService} from '../services/soundcloud-api.service';
-import {Router, ActivatedRoute, NavigationEnd, RoutesRecognized} from '@angular/router';
+import {Router, ActivatedRoute, RoutesRecognized} from '@angular/router';
 
 @Component({
   selector: 'app-player',

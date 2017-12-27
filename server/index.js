@@ -24,6 +24,6 @@ app.get('/search/tracks', proxy('https://api-v2.soundcloud.com', {
   }
 }));
 
-app.listen(3002, function () {
-  console.log('Example app listening on port 3002!');
+app.listen(3001, function () {
+  console.log('Example app listening on port 3001!');
 });

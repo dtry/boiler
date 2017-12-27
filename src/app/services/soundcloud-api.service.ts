@@ -26,12 +26,8 @@ export class SoundcloudApiService {
     tracks: null
   } as IDataSource;
 
-  // private PLAY_LIST_DEFAULT = 'https://api-v2.soundcloud.com/charts?kind=top&genre=soundcloud%3Agenres%3Adeephouse' +
-  //   '&high_tier_only=false&client_id=0U89KnefZ29oWNFitwxnMmKoGkGazKaF&limit=50&offset=0&linked_partitioning=1';
-  //q=pop%20indonesia%2080an&query_urn=soundcloud%3Asearch-autocomplete%3A03794272fc414c8ca7c13eb39c487feb
-
   private CLIENT_ID_PARAM = 'client_id=I16k8POQH5vn1kh8upgNMjkUs58RmGlg';
-  private SERVER_PROXY_PATH_V_2 = 'http://localhost:3001';
+  private SERVER_PROXY_PATH_V_2 = 'http://localhost:3001'; // proxy to https://api-v2.soundcloud.com/
   private SERVER_PROXY_PATH_V_1 = 'http://api.soundcloud.com';
   private PLAY_LIST_DEFAULT = '/users/277705034/favorites?';
   private SEARCH_QUERY = '/search/queries?limit=10&offset=0&linked_partitioning=1&';
@@ -48,13 +44,16 @@ export class SoundcloudApiService {
       .subscribe(response => this.trackList$.next(response.map(item => createTrack(item))));
   }
 
+  /**
+   * Load short data result of search query.
+   *
+   * @param {string} query string for a search.
+   * @returns {Observable<SearchData>} list of search result.
+   */
   search(query: string): Observable<SearchData> {
     const path = this.SERVER_PROXY_PATH_V_2 + this.SEARCH_QUERY + this.CLIENT_ID_PARAM + `&q=${query}%20`;
 
-    return this.http.get<SearchData>(path)
-      .pipe(
-        map(response => response)
-      );
+    return this.http.get<SearchData>(path);
   }
 
   loadTracks(query: string) {
@@ -78,7 +77,7 @@ export class SoundcloudApiService {
       }
     });
 
-    return nextTrack;
+    return nextTrack || this.dataStore.tracks[0];
   }
 
   getPreviewTrack(id: number): Track {
@@ -91,7 +90,7 @@ export class SoundcloudApiService {
       }
     });
 
-    return previewTrack;
+    return previewTrack || this.dataStore.tracks[0];
   }
 
   getTrackById(id: number): Track {

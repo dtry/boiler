@@ -1,13 +1,14 @@
 <div class="search-bar">
   <form [formGroup]="searchForm">
-    <input formControlName="search" placeholder="Search Tracks" (change)="onEnter()"/>
+    <input formControlName="search" placeholder="Search Tracks" (keyup.enter)="onEnter()"/>
   </form>
-  <div *ngIf="searchHelper" class="search-result">
+  <div *ngIf="isSearchCollectionNotEmpty()" class="search-result">
     <ul>
-      <li *ngFor="let item of searchHelper.collection" (click)="setValue(item)">
-        {{item.output}}
+      <li *ngFor="let item of searchHelper.collection; let i = index" (click)="setValue(item)"
+          [class.active]="i === selectedLiValue">
+        {{item.output}} - {{i}}
       </li>
     </ul>
   </div>
-  <app-icon-button [className]="'search'"></app-icon-button>
+  <app-icon-button [className]="'search'" (click)="onEnter()"></app-icon-button>
 </div>
