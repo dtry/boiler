@@ -91,6 +91,11 @@ export class SearchComponent implements OnDestroy {
     }
   }
 
+  onEsc() {
+    this.searchField.setValue(null, {emitEvent: false});
+    this.searchHelper = null;
+  }
+
   setValue(item: SearchDataCollection): void {
     this.searchField.setValue(item.output, {emitEvent: false});
     this.searchHelper = null;

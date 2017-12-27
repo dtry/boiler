@@ -1,6 +1,6 @@
 <div class="search-bar">
   <form [formGroup]="searchForm">
-    <input formControlName="search" placeholder="Search Tracks" (keyup.enter)="onEnter()"/>
+    <input formControlName="search" placeholder="Search Tracks" (keyup.esc)="onEsc()" (keyup.enter)="onEnter()"/>
   </form>
   <div *ngIf="isSearchCollectionNotEmpty()" class="search-result">
     <ul>
