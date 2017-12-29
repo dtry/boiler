@@ -1,1 +1,8 @@
 <div class="visualization-container"></div>
+<div class="control-panel">
+  <app-icon-button [className]="'preview-track '" (onClick)="onPreview()"></app-icon-button>
+  <div class="animation-list">
+    <span> {{animationType.name}} </span>
+  </div>
+  <app-icon-button [className]="'next-track'" (onClick)="onNext()"></app-icon-button>
+</div>

@@ -27,6 +27,7 @@
     "immutable": "^3.8.2",
     "rxjs": "^5.5.2",
     "three": "latest",
+    "three-editor-controls": "^1.0.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

@@ -50,3 +50,16 @@
 .active {
   color: red;
 }
+
+.control-panel{
+  height: 50px;
+  bottom: 60px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.animation-list{
+  width: 100px;
+  text-align: center;
+}
