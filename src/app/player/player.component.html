@@ -14,7 +14,7 @@
         <app-volume-line (volume)="playerService.setVolume($event)" [value]="volume"></app-volume-line>
       </div>
       <div class="player-monitor">
-        <app-icon-button [className]="'monitor'" (onClick)="onMonitor()"></app-icon-button>
+        <app-icon-button [className]="isMonitor ? 'monitor-active' : 'monitor'" (onClick)="onMonitor()"></app-icon-button>
       </div>
     </div>
   </div>

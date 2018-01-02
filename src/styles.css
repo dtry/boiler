@@ -10,20 +10,25 @@ div {
   font: 13px Arial;
 }
 
+.btn-icon {
+  background-size: 32px;
+}
+
 .btn-search {
   background: url('app/shared/images/buttons/search.svg') no-repeat 55% center;
   background-size: 24px;
 }
 
 .btn-play {
-  background: url('app/shared/images/buttons/play.svg') no-repeat 55% center;
+  background: url('app/shared/images/buttons/play.svg') no-repeat center;
 }
 
 .btn-pause {
-  background: url('app/shared/images/buttons/pause.svg') no-repeat 55% center;
+  background: url('app/shared/images/buttons/pause.svg') no-repeat center;
 }
 
 .btn-preview-track {
+  margin-right: 3px;
   background: url('app/shared/images/buttons/left-arrow.svg') no-repeat 55% center;
 }
 
@@ -32,5 +37,11 @@ div {
 }
 
 .btn-monitor {
-  background: url('app/shared/images/buttons/monitor.svg') no-repeat 55% center;
+  background: url('app/shared/images/buttons/stats.svg') no-repeat 55% center;
+  background-size: 28px;
+}
+
+.btn-monitor-active {
+  background: url('app/shared/images/buttons/stats_active.svg') no-repeat 55% center;
+  background-size: 28px;
 }

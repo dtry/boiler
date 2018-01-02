@@ -55,6 +55,13 @@ export class VisualizationComponent implements OnInit, OnDestroy {
     this.animationType = this.animationList[0];
     this.onChange();
   }
+
+  ngOnDestroy() {
+    this.windowResizeHelper();
+    this.subscription.unsubscribe();
+    //this.controls.removeEventListener('change', this.render.bind(this));
+  }
+
   /**
    * Apply next animation type from animation list(this.animationList).
    */
@@ -132,12 +139,6 @@ export class VisualizationComponent implements OnInit, OnDestroy {
         this.render();
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.windowResizeHelper();
-    this.subscription.unsubscribe();
-    this.controls.removeEventListener('change', this.render.bind(this));
   }
 
   onWindowResize() {

@@ -36,6 +36,12 @@ export class SoundcloudApiService {
 
   constructor(private http: HttpClient) {
     this.trackList$.subscribe(list => this.dataStore.tracks = list);
+
+    this.getDefaultTracklist();
+  }
+
+  getTracks(): Track[] {
+    return this.dataStore.tracks;
   }
 
   getDefaultTracklist(): void {

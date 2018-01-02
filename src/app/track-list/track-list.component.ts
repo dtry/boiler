@@ -1,9 +1,8 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {SoundcloudApiService} from '../services/soundcloud-api.service';
 import {Track} from '../models/track';
 import {PlayerService} from '../services/player.service';
 import {IconButtonComponent} from '../shared/components/icon-button/icon-button.component';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-track-list',
@@ -12,26 +11,45 @@ import {Observable} from 'rxjs/Observable';
   encapsulation: ViewEncapsulation.None,
   providers: [IconButtonComponent]
 })
-export class TrackListComponent implements OnInit {
+
+export class TrackListComponent implements OnInit, OnDestroy {
 
   trackList: Track[];
   isPlaying: boolean;
   selectedTrackId: number;
 
-  constructor(private apiService: SoundcloudApiService, private playerService: PlayerService) {
-    this.apiService.getTrackListObs()
-      .subscribe(tracks => this.trackList = tracks);
+  trackListSubscription: any;
+  trackSubscription: any;
+  playSubscription: any;
 
-    this.playerService.getPlay().subscribe(isPlaying => this.isPlaying = isPlaying);
+  constructor(private apiService: SoundcloudApiService,
+              private playerService: PlayerService) {
   }
 
   ngOnInit() {
-    this.apiService.getDefaultTracklist();
+    const track$: any = this.playerService.getTrack();
+    const isPlay$: any = this.playerService.getPlay();
+
+    // Subscribe
+    this.trackListSubscription = this.apiService.getTrackListObs().subscribe(tracks => this.trackList = tracks);
+    this.playSubscription = isPlay$.subscribe(isPlaying => this.isPlaying = isPlaying);
+    this.trackSubscription = track$.subscribe(track => this.selectedTrackId = track.id);
+
+    // Apply values from services
+    this.trackList = this.apiService.getTracks();
+    this.selectedTrackId = track$.source.getValue().id;
+    this.isPlaying = isPlay$.source.getValue();
+  }
+
+  ngOnDestroy() {
+    this.trackListSubscription.unsubscribe();
+    this.playSubscription.unsubscribe();
+    this.trackSubscription.unsubscribe();
   }
 
   onClick(track: Track): void {
     this.selectedTrackId = track.id;
     this.playerService.setTrack(track);
-    this.playerService.setPlay(!this.isPlaying);
+    this.playerService.setPlay(true);
   }
 }

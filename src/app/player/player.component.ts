@@ -16,15 +16,17 @@ export class PlayerComponent implements OnInit {
   isPlaying: boolean;
   times: Times;
   volume: number;
-  trackCardView: boolean;
+  isMonitor: boolean;
 
   constructor(private playerService: PlayerService,
               private apiService: SoundcloudApiService,
               private router: Router,
               private route: ActivatedRoute) {
+  }
 
+  ngOnInit() {
     this.isPlaying = false;
-    this.trackCardView = true;
+    this.isMonitor = false;
     this.volume = this.playerService.getVolume();
 
     this.playerService.getTrack().subscribe(track => this.track = track);
@@ -32,21 +34,20 @@ export class PlayerComponent implements OnInit {
     this.playerService.timeToObservable().subscribe(times => this.times = times);
 
     // load track if this track is undefined and params in rout not empty.
+    // TODO: add clear in destroy step.
     this.router.events.subscribe(val => {
       if (val instanceof RoutesRecognized) {
         const id = +val.state.root.firstChild.params['id'];
         if (!id || this.track.id) {
           return;
         }
+        this.isMonitor = true;
         this.apiService.loadTrackById(id).subscribe(track => {
           this.track = track;
           this.playerService.setTrack(this.track);
         });
       }
     });
-  }
-
-  ngOnInit() {
   }
 
   onPlay() {
@@ -66,12 +67,12 @@ export class PlayerComponent implements OnInit {
   }
 
   onMonitor() {
-    if (this.trackCardView) {
+    if (!this.isMonitor) {
       this.router.navigate(['/tracks/' + this.track.id]);
     } else {
       this.router.navigate(['/tracks']);
     }
 
-    this.trackCardView = !this.trackCardView;
+    this.isMonitor = !this.isMonitor;
   }
 }

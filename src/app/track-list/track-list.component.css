@@ -19,7 +19,7 @@
 
 .track-list-container .card-container-item {
   width: 200px;
-  height: 285px;
+  height: 240px;
   border: 1px solid #000;
   flex-basis: auto;
   margin: 10px;
@@ -43,5 +43,21 @@
 }
 
 .card-container-controls {
+  position: absolute;
+}
 
+.card-container-controls button:hover {
+  opacity: 0.8;
+}
+
+.card-container-controls button {
+  background-size: 100px;
+  width: 100px;
+  height: 100px;
+  padding: 100px;
+  opacity: 0;
+}
+
+.card-container-controls button.btn-pause  {
+  opacity: 0.8;
 }

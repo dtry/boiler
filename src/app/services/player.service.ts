@@ -13,9 +13,8 @@ import {SoundcloudApiService} from '../services/soundcloud-api.service';
 export class PlayerService {
 
   time$: Observable<Times>;
-
   track$: BehaviorSubject<any> = new BehaviorSubject({});
-  isPlay$: Subject<boolean> = new Subject<boolean>();
+  isPlay$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   bounds$: Subject<Uint8Array> = new Subject<Uint8Array>();
 
   audio = new Audio();

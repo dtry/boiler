@@ -18,6 +18,7 @@
   width: 30px;
   height: 30px;
   margin-left: 5px;
+  background-size: 24px !important;
 }
 
 .search-result {
@@ -48,10 +49,10 @@
 }
 
 .active {
-  color: red;
+  color: #ff4500;
 }
 
-.control-panel{
+.control-panel {
   height: 50px;
   bottom: 60px;
   position: absolute;
@@ -59,7 +60,7 @@
   align-items: center;
 }
 
-.animation-list{
+.animation-list {
   width: 100px;
   text-align: center;
 }
