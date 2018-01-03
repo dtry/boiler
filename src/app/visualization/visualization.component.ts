@@ -35,7 +35,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
     {id: 'Cube', name: 'Cube', type: Cube}
   ];
 
-  private animationType: IList;
+  animationType: IList;
   private animationTypeIndex: number;
   private animationClass: any;
 
