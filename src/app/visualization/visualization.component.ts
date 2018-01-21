@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {IList} from '../models/list';
 import {Cube} from './render/cube';
+
 //import {Lathe} from './render/lathe';
 
 @Component({
@@ -28,7 +29,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   private size;
 
   private windowResizeHelper: Function;
-  private subscription;
+  //private subscription;
 
   private animationList = <IList[]>[
     //{id: 'Lathe', name: 'Lathe', type: Lathe},
@@ -58,7 +59,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.windowResizeHelper();
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
     //this.controls.removeEventListener('change', this.render.bind(this));
   }
 
@@ -133,12 +134,24 @@ export class VisualizationComponent implements OnInit, OnDestroy {
     //this.controls = new THREE.EditorControls(this.camera, this.container);
     //this.controls.addEventListener('change', this.render.bind(this));
     this.windowResizeHelper = this.componentRenderer.listen('window', 'resize', this.onWindowResize.bind(this));
-    this.subscription = this.player.getBounds().subscribe(bounds => {
-      if (this.animationClass) {
-        this.animationClass.redraw(bounds);
+
+    const player = this.player.getContext();
+    const bands = new Uint8Array(player.analyser.frequencyBinCount);
+
+    player.node.onaudioprocess = () => {
+      player.analyser.getByteFrequencyData(bands);
+      if (!player.audio.paused) {
+        this.animationClass.redraw(bands);
         this.render();
       }
-    });
+    };
+    //
+    // this.subscription = this.player.getBounds().subscribe(bounds => {
+    //   if (this.animationClass) {
+    //     this.animationClass.redraw(bounds);
+    //     this.render();
+    //   }
+    // });
   }
 
   onWindowResize() {

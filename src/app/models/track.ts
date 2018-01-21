@@ -82,7 +82,7 @@ function formatTrackTitle(title: string): string {
 }
 
 function streamUrl(url: string): string {
-  return `${url}?${'client_id=0U89KnefZ29oWNFitwxnMmKoGkGazKaF'}`;
+  return `${url}?${'client_id=I16k8POQH5vn1kh8upgNMjkUs58RmGlg'}`;
 }
 
 function trackImageUrl(trackData: TrackData, size: string =  't500x500.jpg'): string {
