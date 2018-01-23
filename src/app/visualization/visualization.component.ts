@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewEncapsulation, OnDestroy, Renderer2} from '@angular/core';
 import * as THREE from 'three';
-import * as EditorControls from 'three-editor-controls';
+//import * as EditorControls from 'three-editor-controls';
 
 import {PlayerService} from '../services/player.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -21,7 +21,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
 
   private container;
   private camera;
-  private controls;
+  //private controls;
   private renderer;
   private scene;
   private light;
@@ -29,7 +29,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   private size;
 
   private windowResizeHelper: Function;
-  //private subscription;
+  private subscription;
 
   private animationList = <IList[]>[
     //{id: 'Lathe', name: 'Lathe', type: Lathe},
@@ -59,8 +59,8 @@ export class VisualizationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.windowResizeHelper();
-    //this.subscription.unsubscribe();
-    this.controls.removeEventListener('change', this.render.bind(this));
+    this.subscription.unsubscribe();
+    //this.controls.removeEventListener('change', this.render.bind(this));
   }
 
   /**
@@ -103,7 +103,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   }
 
   initScene() {
-    EditorControls(THREE); // hack for three
+    //EditorControls(THREE); // hack for three
     this.container = this.element.nativeElement.querySelector('div');
     const boundingClientRect = this.container.getBoundingClientRect();
 
@@ -131,27 +131,27 @@ export class VisualizationComponent implements OnInit, OnDestroy {
     this.container.appendChild(this.renderer.domElement);
 
     // Events
-    this.controls = new THREE.EditorControls(this.camera, this.container);
-    this.controls.addEventListener('change', this.render.bind(this));
+    // this.controls = new THREE.EditorControls(this.camera, this.container);
+    // this.controls.addEventListener('change', this.render.bind(this));
     this.windowResizeHelper = this.componentRenderer.listen('window', 'resize', this.onWindowResize.bind(this));
 
-    const player = this.player.getContext();
-    const bands = new Uint8Array(player.analyser.frequencyBinCount);
-
-    player.node.onaudioprocess = () => {
-      player.analyser.getByteFrequencyData(bands);
-      if (!player.audio.paused) {
-        this.animationClass.redraw(bands);
-        this.render();
-      }
-    };
+    // const player = this.player.getContext();
+    // const bands = new Uint8Array(player.analyser.frequencyBinCount);
     //
-    // this.subscription = this.player.getBounds().subscribe(bounds => {
-    //   if (this.animationClass) {
-    //     this.animationClass.redraw(bounds);
+    // player.node.onaudioprocess = () => {
+    //   player.analyser.getByteFrequencyData(bands);
+    //   if (!player.audio.paused) {
+    //     this.animationClass.redraw(bands);
     //     this.render();
     //   }
-    // });
+    // };
+    //
+    this.subscription = this.player.getBounds().subscribe(bounds => {
+      if (this.animationClass) {
+        this.animationClass.redraw(bounds);
+        this.render();
+      }
+    });
   }
 
   onWindowResize() {

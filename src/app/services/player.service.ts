@@ -51,12 +51,12 @@ export class PlayerService {
 
     this.bands = new Uint8Array(this.analyser.frequencyBinCount);
 
-    // this.node.onaudioprocess = () => {
-    //   this.analyser.getByteFrequencyData(this.bands);
-    //   if (!this.audio.paused) {
-    //     this.bounds$.next(this.bands);
-    //   }
-    // };
+    this.node.onaudioprocess = () => {
+      this.analyser.getByteFrequencyData(this.bands);
+      if (!this.audio.paused) {
+        this.bounds$.next(this.bands);
+      }
+    };
 
   }
 
