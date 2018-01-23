@@ -27,7 +27,7 @@ export class SoundcloudApiService {
   } as IDataSource;
 
   private CLIENT_ID_PARAM = 'client_id=I16k8POQH5vn1kh8upgNMjkUs58RmGlg';
-  private SERVER_PROXY_PATH_V_2 = 'http://localhost:3001'; // proxy to https://api-v2.soundcloud.com/
+  private SERVER_PROXY_PATH_V_2 = 'https://boiler-project.herokuapp.com'; //'http://localhost:3001'; // proxy to https://api-v2.soundcloud.com/
   private SERVER_PROXY_PATH_V_1 = 'https://api.soundcloud.com';
   private PLAY_LIST_DEFAULT = '/users/277705034/favorites?';
   private SEARCH_QUERY = '/search/queries?limit=10&offset=0&linked_partitioning=1&';
