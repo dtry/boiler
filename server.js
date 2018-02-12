@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const proxy = require('express-http-proxy');
 const SOUNDCLOUD_PROXY_URL = 'https://api-v2.soundcloud.com';
-const PROD = false;
+const PROD = true;
 const PORT = PROD ? 8080 : 3030;
 
 app.use(function (req, res, next) {
