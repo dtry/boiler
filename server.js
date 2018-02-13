@@ -35,4 +35,4 @@ app.get('*', function (req, res) {
 });
 
 // Start the app by listening on the default
-app.listen(3030);
+app.listen(process.env.port || 3030);
