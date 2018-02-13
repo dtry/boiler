@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const proxy = require('express-http-proxy');
 const SOUNDCLOUD_PROXY_URL = 'https://api-v2.soundcloud.com';
+const port = process.env.PORT || 3030;
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -35,4 +36,6 @@ app.get('*', function (req, res) {
 });
 
 // Start the app by listening on the default
-app.listen(process.env.port || 8080);
+app.listen(port, function () {
+  console.log('Api available at port:' + port);
+});
