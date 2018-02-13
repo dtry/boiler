@@ -1,9 +1,8 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const proxy = require('express-http-proxy');
 const SOUNDCLOUD_PROXY_URL = 'https://api-v2.soundcloud.com';
-const PROD = true;
-const PORT = PROD ? 8080 : 3030;
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -12,6 +11,10 @@ app.use(function (req, res, next) {
 
   next();
 });
+
+// Run the app by serving the static files
+// in the dist directory
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/search/queries', proxy(SOUNDCLOUD_PROXY_URL, {
   https: true,
@@ -28,12 +31,8 @@ app.get('/search/tracks', proxy(SOUNDCLOUD_PROXY_URL, {
 }));
 
 app.get('*', function (req, res) {
-  res.sendfile(__dirname + '/dist/index.html')
+  res.sendFile(__dirname + '/dist/index.html')
 });
 
-// Run the app by serving the static files
-// in the dist directory
-app.use(express.static(__dirname + '/dist'));
-
 // Start the app by listening on the default
-app.listen(PORT);
+app.listen(3030);
