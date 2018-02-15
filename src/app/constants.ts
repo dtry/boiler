@@ -16,7 +16,7 @@ export const SOUNDCLOUD_API_BASE_URL = environment.soundcloudProxyUrl;
 export const CLIENT_ID = 'I16k8POQH5vn1kh8upgNMjkUs58RmGlg';
 export const CLIENT_ID_PARAM = `client_id=${CLIENT_ID}`;
 
-export const PAGINATION_LIMIT = 10;
+export const PAGINATION_LIMIT = 50;
 export const PAGINATION_PARAMS = `limit=${PAGINATION_LIMIT}&linked_partitioning=1&offset=0`;
 
 export const DEFAULT_USER_ID = '277705034';

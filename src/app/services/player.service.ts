@@ -35,8 +35,17 @@ export class PlayerService {
   }
 
   initAudioContext() {
+    let AudioContext = window.AudioContext // Default
+      || window.webkitAudioContext // Safari and old versions of Chrome
+      || false;
+
+    if (!AudioContext) {
+      alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
+      return;
+    }
+
     this.audio.crossOrigin = 'anonymous';
-    this.context = new AudioContext();
+    this.context = new AudioContext;
     this.node = this.context.createScriptProcessor(2048, 1, 1);
 
     this.analyser = this.context.createAnalyser();
